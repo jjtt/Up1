@@ -14,6 +14,7 @@ upload.modules.addmodule({
         </div>\
         <div class="contentarea" id="uploadview">\
             <div class="centerview">\
+            <div style="position: absolute;"><input type="checkbox" id="publish_url"/>Publish?</div>\
             <div id="pastearea" class="boxarea">\
                 <h1>Upload</h1>\
             </div>\
@@ -156,6 +157,17 @@ upload.modules.addmodule({
             upload.route.setroute(upload.download, undefined, data.seed)
         } else {
             window.location = '#' + data.seed
+        }
+
+        // publish
+        var publish = $('#publish_url').prop('checked')
+        if (upload.config.publish_url && publish) {
+            $.ajax({
+                url: upload.config.publish_url,
+                data: {'url': window.location.href},
+                cache: false,
+                type: 'POST'
+            })
         }
     },
     newpaste: function() {
